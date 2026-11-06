@@ -1,0 +1,51 @@
+# Глоссарий и правила перевода дайджеста (llm/translate.py, промпт translate_v1).
+# Пополняется по замечаниям носителя языка на пилоте. Любая правка здесь меняет отпечаток входа,
+# и переводы пересоздаются при следующей сборке.
+#
+# Узбекский — латиница (вопрос 5 к команде): o‘ и g‘ с апострофом ‘ (U+2018), тутуқ белгиси — ’ (U+2019).
+
+languages:
+  en:
+    name: английский
+    rules: |
+      ## Английский
+      - Даты: «28 October 2026». Десятичный знак — точка, разряды — запятая: «1.5 million», «12,023.46».
+      - Суммы в сумах: «UZS 1.5 million» или «1.5 million soums».
+      - Номера актов остаются латиницей, как в оригинале, чтобы их можно было найти на lex.uz: «Presidential Decree No. UP-236», «Presidential Resolution No. PP-387», «Law No. ZRU-1184», «Cabinet of Ministers Resolution No. 594».
+  uz:
+    name: узбекский (латиница)
+    rules: |
+      ## Узбекский
+      - Только латиница по действующей орфографии: o‘, g‘ (с ‘), sh, ch, ng; тутуқ белгиси — ’ (ma’lumot, ta’lim).
+      - Даты: «2026-yil 28-oktabr» или «28.10.2026». Десятичный знак — запятая: «1,5 mln so‘m», разряды — пробел: «12 023,46».
+      - Номера актов — официальными узбекскими сокращениями: УП → PF («Prezidentning PF-236-son Farmoni»), ПП → PQ («PQ-387-son qarori»), ЗРУ → O‘RQ («O‘RQ-1184-son Qonun»), ПКМ → VMQ («Vazirlar Mahkamasining 594-son qarori (VMQ-594)»).
+      - Пиши так, как пишут узбекские деловые СМИ (gazeta.uz/oz, kun.uz/uz), без кальки с русского.
+
+# Термины: ru → en / uz
+terms:
+  - {ru: НДС, en: VAT, uz: QQS}
+  - {ru: налог на прибыль, en: corporate income tax, uz: foyda solig‘i}
+  - {ru: НДФЛ (налог на доходы физических лиц), en: personal income tax, uz: jismoniy shaxslarning daromad solig‘i}
+  - {ru: социальный налог, en: social tax, uz: ijtimoiy soliq}
+  - {ru: налог с оборота, en: turnover tax, uz: aylanmadan olinadigan soliq}
+  - {ru: акциз, en: excise tax, uz: aksiz solig‘i}
+  - {ru: таможенная пошлина, en: customs duty, uz: bojxona boji}
+  - {ru: электронный счёт-фактура, en: e-invoice, uz: elektron hisobvaraq-faktura}
+  - {ru: Налоговый комитет, en: Tax Committee, uz: Soliq qo‘mitasi}
+  - {ru: Центральный банк (ЦБ), en: Central Bank, uz: Markaziy bank}
+  - {ru: основная ставка ЦБ, en: policy rate, uz: asosiy stavka}
+  - {ru: Министерство экономики и финансов, en: Ministry of Economy and Finance, uz: Iqtisodiyot va moliya vazirligi}
+  - {ru: Министерство юстиции, en: Ministry of Justice, uz: Adliya vazirligi}
+  - {ru: Кабинет Министров, en: Cabinet of Ministers, uz: Vazirlar Mahkamasi}
+  - {ru: Олий Мажлис, en: Oliy Majlis, uz: Oliy Majlis}
+  - {ru: Национальная база данных законодательства (lex.uz), en: National Database of Legislation (lex.uz), uz: Qonunchilik ma’lumotlari milliy bazasi (lex.uz)}
+  - {ru: сум, en: soum (UZS), uz: so‘m}
+  - {ru: БРВ (базовая расчётная величина), en: base calculation amount (BCA), uz: bazaviy hisoblash miqdori (BHM)}
+  - {ru: минимальный размер оплаты труда, en: minimum wage, uz: mehnatga haq to‘lashning eng kam miqdori}
+  - {ru: индивидуальный предприниматель (ИП), en: individual entrepreneur, uz: yakka tartibdagi tadbirkor}
+  - {ru: самозанятый, en: self-employed person, uz: o‘zini o‘zi band qilgan shaxs}
+  - {ru: юридическое лицо (юрлицо), en: legal entity, uz: yuridik shaxs}
+  - {ru: государственная доля, en: state share, uz: davlat ulushi}
+  - {ru: финансовая отчётность, en: financial statements, uz: moliyaviy hisobot}
+  - {ru: МСФО, en: IFRS, uz: MHXS}
+  - {ru: вступает в силу, en: takes effect, uz: kuchga kiradi}

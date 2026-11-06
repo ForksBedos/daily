@@ -1,0 +1,94 @@
+# Общие настройки UzDigest. Пути указаны относительно корня проекта.
+timezone: Asia/Tashkent
+db_path: data/uzdigest.sqlite3
+outputs_dir: outputs
+logs_dir: logs
+
+http:
+  user_agent: "UzDigest/0.1 (internal news digest; RSS reader)"
+  timeout_s: 20
+  retries: 3
+  min_delay_s: 1.0      # пауза между запросами к одному домену; Crawl-delay из robots.txt важнее
+  max_workers: 6        # сколько источников опрашивать одновременно
+
+llm:
+  model: claude-sonnet-5-5
+  effort: medium
+  max_calls_per_run: 60 # при исчерпании — резервный режим: анонсы из RSS, «перевод не готов»
+  triage_batch: 80      # материалов в одном вызове отбора
+  summarize_batch: 5    # сюжетов в одном вызове текстов
+  translate_batch: 10   # статей в одном вызове перевода
+  max_text_chars: 8000  # длиннее — обрезается по абзацу с пометкой «[текст сокращён]»
+
+digest:
+  max_articles: 25      # вопрос 1 к команде; правовые сюжеты входят всегда, остальные — по важности
+  section_limits:       # не больше статей в разделе; правовые сюжеты вне лимита. Налоги, законы и бухучёт без лимита
+    finance: 3
+    business: 3
+    macro: 3
+  min_importance: 3     # неправовой сюжет с важностью ниже в дайджест не идёт
+  min_window_h: 24      # окно — с конца прошлого дайджеста, но не короче 24 ч (понедельник — около 72 ч)
+  max_window_h: 96      # и не длиннее 96 ч: столько хранят догрузка и сбор (collect.lookback_h)
+
+posts:                  # генератор постов (docs/plan/stage-7-posts.md); площадки — в config/posts.yaml
+  max_per_day: 40       # постов в сутки: защита подписки Claude от случайного расхода
+
+schedule:               # Планировщик Windows, только будни (docs/plan/stage-8-automation.md).
+  digest_at: "09:30"    # Меняется вместе с параметрами scripts/install_tasks.ps1: uzdigest status
+  collect_from: "08:00" # показывает следующий запуск по этим значениям
+  collect_to: "20:00"
+  collect_every_h: 2
+
+backup:                 # копия БД перед каждой сборкой дайджеста: data/backup/uzdigest-ГГГГ-ММ-ДД.sqlite3
+  keep_last: null       # null — старые копии не удаляются, пока команда не ответит на вопрос 4 (предложено 14)
+
+notify: [log, telegram] # после каждого run; telegram — админам бота о сбое (без токена молчит)
+
+collect:
+  lookback_h: 96        # потолок окна: глубже не листаем API и не догружаем (PLAN.md, раздел 0)
+
+enrich:                 # полный текст со страниц статей (trafilatura)
+  max_pages_per_run: 300
+  max_attempts: 3       # неудачная страница повторяется в следующих запусках, не больше 3 раз
+  min_text_chars: 100   # короче — считаем, что статью со страницы взять не удалось
+
+backfill:               # догрузка, если лента короче пробела между запусками
+  max_urls: 300         # новых адресов на источник за запуск; у uzdaily за 72 ч их 176, а обрезанное
+                        # лимитом больше не догружается (следующий опрос считает пробел с этого)
+  max_pages: 5          # для feed_paged и list_paged
+
+rates:
+  url: https://cbu.uz/ru/arkhiv-kursov-valyut/json/
+  currencies: [USD, EUR, RUB]   # для строки курсов в дайджесте; в БД пишутся все валюты
+
+dedup:                  # попарная похожесть (dedup/similarity.py) и кластеры
+  # Предварительные значения, подобраны на 582 материалах 30.10–02.11.2026 на глаз.
+  # Окончательные — по разметке data/dedup_pairs.csv и tests/eval_dedup.py (stage-3-dedup.md, 3.6).
+  pair_window_h: 72     # сравниваются материалы не дальше 72 ч друг от друга
+  w_title: 0.4          # Jaccard основ слов заголовка
+  w_anchors: 0.25       # общие числа, латиница, имена собственные (до anchors_cap штук)
+  w_text: 0.35          # Jaccard основ слов первых 400 знаков текста
+  anchors_cap: 3
+  merge_threshold: 0.45 # не ниже — один сюжет; на живых данных ≥ 0.45 почти всегда дубль
+  gray_threshold: 0.22  # 0.22–0.45 — серая зона, решает Claude; ниже — разные сюжеты
+  text_gray_threshold: 0.40    # совпадение всего текста по редким словам: пара идёт к Claude (ISSUES № 17)
+  repeat_text_threshold: 0.60  # то же с прошлым выпуском: повтор без вопроса Claude
+  repeat_days: 14       # повторы сверяются с дайджестами за 14 дней
+
+lex:                    # сверка упоминаний актов с lex.uz (docs/plan/stage-4-lex.md)
+  cache_h: 12           # ответы поиска и страницы документа кэшируются; меньше суток, чтобы ежедневный
+                        # запуск в 09:30 не взял вчерашний ответ «не найдено»
+  pending_days: 7       # столько дней после выхода новости акт ищется заново; потом статус not_found
+  guessed_year_days: 60 # даты рядом с номером нет, год взят по дате новости: подтверждаем, только если
+                        # акт принят не раньше чем за 60 дней до новости (свежий акт без даты — обычное дело)
+
+voice:                  # голосовые посты: бот, посредник и транскрибатор на ноутбуке (docs/operations.md)
+  dir: data/voice       # папка обмена, подключена к контейнеру в docker-compose.yml
+  max_seconds: 300      # голосовое длиннее бот не принимает
+
+bot:                    # Telegram-бот (docs/plan/stage-10-telegram-bot.md). Токен — в .env (TELEGRAM_BOT_TOKEN).
+  # Белый список по Telegram ID; остальным — «Доступ запрещен». Утром темы дня получают все. Роли: admin — всё, включая «Обновить
+  # дайджест», «Статус» и сообщения о сбоях; smm — дайджест и посты.
+  users:
+    - {telegram_id: 999812790, name: "Админ 1", role: admin}
+    - {telegram_id: 7584910935, name: "Админ 2", role: admin}

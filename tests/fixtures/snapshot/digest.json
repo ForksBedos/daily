@@ -1,0 +1,249 @@
+{
+  "date": "2026-11-02",
+  "window": {
+    "from": "2026-10-30T04:30:00Z",
+    "to": "2026-11-02T04:30:00Z"
+  },
+  "generator": {
+    "version": "0.1.0",
+    "model": "claude-sonnet-5-5",
+    "prompts": [
+      "triage_v1",
+      "summarize_v1",
+      "translate_v1"
+    ]
+  },
+  "sources_ok": 16,
+  "sources_total": 17,
+  "rates": [
+    {
+      "date": "2026-10-31",
+      "ccy": "USD",
+      "nominal": 1,
+      "rate": 12023.46,
+      "diff": -42.76
+    },
+    {
+      "date": "2026-10-31",
+      "ccy": "EUR",
+      "nominal": 1,
+      "rate": 13461.47,
+      "diff": 17.29
+    },
+    {
+      "date": "2026-10-31",
+      "ccy": "RUB",
+      "nominal": 1,
+      "rate": 149.44,
+      "diff": null
+    }
+  ],
+  "articles": [
+    {
+      "id": "2026-11-02-001",
+      "cluster_id": 32,
+      "category": "legislation",
+      "importance": 5,
+      "doc": {
+        "doc_key": "UP-236-2026",
+        "doc_type": "UP",
+        "number": "236",
+        "adopted_on": "2026-10-28",
+        "effective_on": "2026-10-30",
+        "status": "verified",
+        "lex": {
+          "ru": {
+            "url": "https://lex.uz/ru/docs/8563561",
+            "lang": "ru"
+          },
+          "uz": {
+            "url": "https://lex.uz/uz/docs/-8563559",
+            "lang": "uz"
+          },
+          "en": {
+            "url": "https://lex.uz/ru/docs/8563561",
+            "lang": "ru"
+          }
+        }
+      },
+      "source": {
+        "code": "norma",
+        "name": "norma.uz",
+        "url": "https://norma.uz/a1",
+        "published_at": "2026-11-02T05:00:00Z",
+        "time_known": true
+      },
+      "also": [
+        {
+          "code": "gazeta",
+          "name": "gazeta.uz",
+          "url": "https://gazeta.uz/a1",
+          "published_at": "2026-11-02T05:00:00Z",
+          "time_known": true
+        }
+      ],
+      "texts": {
+        "ru": {
+          "headline": "RU: заголовок",
+          "summary": "RU: краткое содержание.",
+          "details": "Подробности."
+        },
+        "en": {
+          "headline": "EN: заголовок",
+          "summary": "EN: краткое содержание.",
+          "details": "Подробности."
+        },
+        "uz": {
+          "headline": "UZ: заголовок",
+          "summary": "UZ: краткое содержание.",
+          "details": "Подробности."
+        }
+      },
+      "by_llm": true,
+      "flags": []
+    },
+    {
+      "id": "2026-11-02-002",
+      "cluster_id": 40,
+      "category": "legislation",
+      "importance": 4,
+      "doc": {
+        "doc_key": "PKM-594-2026",
+        "doc_type": "PKM",
+        "number": "594",
+        "adopted_on": null,
+        "effective_on": null,
+        "status": "pending",
+        "lex": {}
+      },
+      "source": {
+        "code": "nuz",
+        "name": "nuz.uz",
+        "url": "https://nuz.uz/a2",
+        "published_at": "2026-11-02T05:00:00Z",
+        "time_known": true
+      },
+      "also": [],
+      "texts": {
+        "ru": {
+          "headline": "RU: заголовок",
+          "summary": "RU: краткое содержание.",
+          "details": "Подробности."
+        },
+        "en": {
+          "headline": "EN: заголовок",
+          "summary": "EN: краткое содержание.",
+          "details": "Подробности."
+        },
+        "uz": {
+          "headline": "UZ: заголовок",
+          "summary": "UZ: краткое содержание.",
+          "details": "Подробности."
+        }
+      },
+      "by_llm": true,
+      "flags": []
+    },
+    {
+      "id": "2026-11-02-003",
+      "cluster_id": 41,
+      "category": "taxes",
+      "importance": 4,
+      "doc": null,
+      "source": {
+        "code": "soliq",
+        "name": "gov.uz/soliq",
+        "url": "https://gov.uz/ru/soliq/news/view/3",
+        "published_at": "2026-11-02T05:00:00Z",
+        "time_known": false
+      },
+      "also": [],
+      "texts": {
+        "ru": {
+          "headline": "RU: заголовок",
+          "summary": "RU: краткое содержание.",
+          "details": "Подробности."
+        },
+        "en": null,
+        "uz": {
+          "headline": "UZ: заголовок",
+          "summary": "UZ: краткое содержание.",
+          "details": "Подробности."
+        }
+      },
+      "by_llm": true,
+      "flags": [
+        "факт не из источника: 15%"
+      ]
+    },
+    {
+      "id": "2026-11-02-004",
+      "cluster_id": 42,
+      "category": "finance",
+      "importance": 3,
+      "doc": null,
+      "source": {
+        "code": "kun",
+        "name": "kun.uz",
+        "url": "https://kun.uz/a4",
+        "published_at": "2026-11-02T05:00:00Z",
+        "time_known": true
+      },
+      "also": [],
+      "texts": {
+        "ru": {
+          "headline": "RU: заголовок",
+          "summary": "RU: краткое содержание.",
+          "details": ""
+        },
+        "en": null,
+        "uz": null
+      },
+      "by_llm": false,
+      "flags": []
+    }
+  ],
+  "updates": [
+    {
+      "doc": {
+        "doc_key": "PP-387-2026",
+        "doc_type": "PP",
+        "number": "387",
+        "adopted_on": "2026-10-27",
+        "effective_on": null,
+        "status": "verified",
+        "lex": {
+          "ru": {
+            "url": "https://lex.uz/ru/docs/8560001",
+            "lang": "ru"
+          },
+          "uz": {
+            "url": "https://lex.uz/uz/docs/8560002",
+            "lang": "uz"
+          },
+          "en": {
+            "url": "https://lex.uz/en/docs/8560003",
+            "lang": "en"
+          }
+        }
+      },
+      "previous_date": "2026-10-30",
+      "headlines": {
+        "ru": "Новые правила госзакупок",
+        "en": "New procurement rules"
+      }
+    }
+  ],
+  "failures": {
+    "sources": [
+      {
+        "code": "uzdaily",
+        "name": "uzdaily.uz",
+        "error": "ConnectTimeout: timed out",
+        "last_ok_at": "2026-11-01T06:00:00Z"
+      }
+    ],
+    "no_llm": 1,
+    "no_translation": 2
+  }
+}

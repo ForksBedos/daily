@@ -1,0 +1,56 @@
+---
+date: {{ date }}
+lang: {{ lang }}
+window: {{ window }}
+items: {{ items }}
+sources_ok: {{ sources_ok }}
+generator: {{ generator }}
+---
+
+# {{ title }}
+
+{% if rates %}
+{{ rates }}
+
+{% endif %}
+{% for section in sections %}
+## {{ section.name }}
+
+{% for a in section.articles %}
+<!-- id: {{ a.id }}{% if a.doc_key %} | doc_key: {{ a.doc_key }}{% endif %} -->
+### {{ a.headline }}
+
+{% for note in a.notes %}
+_{{ note }}_
+
+{% endfor %}
+{% if a.check %}
+**{{ a.check }}**
+
+{% endif %}
+**{{ t.summary }}:** {{ a.summary }}
+
+**{{ t.details }}:**
+{{ a.details }}
+
+{% if a.document %}
+**{{ t.document }}:** {{ a.document }}
+
+{% endif %}
+**{{ t.source }}:** {{ a.source }}
+
+**{{ t.also }}:** {{ a.also }}
+
+{% endfor %}
+{% endfor %}
+{% if updates %}
+## {{ t.updates }}
+
+{% for line in updates %}
+- {{ line }}
+{% endfor %}
+
+{% endif %}
+---
+
+{{ footer }}

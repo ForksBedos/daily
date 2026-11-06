@@ -1,0 +1,189 @@
+# Реестр источников. Проверены 02.11.2026, подробности в PLAN.md (раздел 2) и
+# docs/plan/stage-2-sources.md.
+#
+# kind:  rss | govuz_api | html_list | lex_rss
+# tier:  A — официальные и правовые, B — профессиональные (налоги, бухучёт), C — СМИ
+# robots_exempt: true только для RSS, который сайт сам публикует для подписки,
+#   но закрывает в robots.txt (решение команды, PLAN.md, раздел 11, п. 7). На страницы
+#   статей, списки и sitemap не распространяется.
+# fulltext: false — страницы статей не скачиваются, текст только из ленты или API.
+# text_drop_lines / text_stop_lines — регулярные выражения для чистки текста со страницы:
+#   строка удаляется / с этой строки и до конца — уже не статья.
+# exclude_url_patterns — стоп-рубрики в адресе статьи для префильтра (config/keywords.yaml).
+# backfill — догрузка, если самая старая запись ленты новее начала пробела:
+#   sitemap_daily / sitemap_monthly — шаблон адреса: {Y} {m} {d} без нулей, {MM} {DD} с нулями;
+#   sitemap — один файл, фильтр по lastmod; feed_paged — шаблон с {n}; list_paged — блок html.
+
+sources:
+  # --- A: официальные и правовые ---
+  - code: lex
+    name: lex.uz — Национальная база законодательства
+    kind: lex_rss                    # пишет в справочник legal_acts, а не в items
+    url: https://lex.uz/ru/rss
+    tier: A
+
+  - code: soliq
+    name: Налоговый комитет (gov.uz)
+    kind: govuz_api
+    url: https://api-portal.gov.uz/authorities/news/category?code_name=news
+    tier: A
+    fulltext: false                  # gov.uz — одностраничное приложение, текст только из API
+    params: {authority: soliq, language: ru}
+
+  - code: imv
+    name: Министерство экономики и финансов (gov.uz)
+    kind: govuz_api
+    url: https://api-portal.gov.uz/authorities/news/category?code_name=news
+    tier: A
+    lang: uz                         # русской ленты нет, новости на узбекской кириллице
+    fulltext: false
+    params: {authority: imv, language: uz}
+
+  # Предложены к подключению (docs/plan/README.md, вопрос 3 к команде). Обе ленты активны и на русском.
+  - code: miit
+    name: Министерство инвестиций, промышленности и торговли (gov.uz)
+    kind: govuz_api
+    url: https://api-portal.gov.uz/authorities/news/category?code_name=news
+    tier: A
+    enabled: false
+    fulltext: false
+    params: {authority: miit, language: ru}
+
+  - code: adliya
+    name: Министерство юстиции (gov.uz)
+    kind: govuz_api
+    url: https://api-portal.gov.uz/authorities/news/category?code_name=news
+    tier: A
+    enabled: false
+    fulltext: false
+    params: {authority: adliya, language: ru}
+
+  - code: cbu
+    name: Центральный банк
+    kind: rss
+    url: https://cbu.uz/ru/press_center/news/rss/
+    tier: A
+    text_drop_lines:
+      - '^Дата обновления:'
+      - '^\d{1,2} [а-я]{3} \d{4}$'   # «26 окт 2026»
+    text_stop_lines:
+      - '^Новое приложение'
+
+  - code: president
+    name: Пресс-служба Президента
+    kind: html_list
+    url: https://president.uz/ru/lists/news
+    tier: A
+    params:
+      link_pattern: '^/ru/lists/view/\d+$'
+      date_pattern: '<span class="date_text">\s*([\d-]+)'
+      date_format: '%d-%m-%Y'
+    text_drop_lines:
+      - '^\d{2}\.\d{2}\.\d{4}$'
+
+  # --- B: налоги и бухучёт ---
+  - code: norma
+    name: norma.uz
+    kind: rss
+    url: https://www.norma.uz/ru/scripts/rss/1882,2218,3950,630,4365,4315,4382
+    tier: B
+    robots_exempt: true
+
+  - code: buxgalter
+    name: buxgalter.uz
+    kind: html_list
+    url: https://buxgalter.uz/newssite/
+    tier: B
+    params:
+      link_pattern: '^/ru/publish/doc/text\d+_'
+      date_pattern: '<div class="date_text">\s*([\d.]+)'
+      date_format: '%d.%m.%y'
+    text_drop_lines:
+      - '^Закрываем .*:$'            # рекламный баннер над статьёй
+      - '^Внимание$'
+      - '^Чтобы не пропустить важные новости'
+      - '^Копирование и использование материалов'
+
+  # --- C: деловые и общие СМИ ---
+  - code: spot
+    name: Spot
+    kind: rss
+    url: https://www.spot.uz/ru/rss/
+    tier: C
+
+  - code: kursiv
+    name: Kursiv Uzbekistan
+    kind: rss
+    url: https://uz.kursiv.media/feed/
+    tier: C
+
+  - code: gazeta
+    name: Газета.uz
+    kind: rss
+    url: https://www.gazeta.uz/ru/rss/
+    tier: C
+
+  - code: kun
+    name: Kun.uz
+    kind: rss
+    url: https://kun.uz/news/rss?lang=ru
+    tier: C
+    backfill:                        # лента на 46 ч
+      strategy: sitemap_daily
+      url: https://kun.uz/sitemap/site-map-news_day_{d}_year_{Y}_month_{m}.xml
+      url_filter: /ru/news/
+
+  - code: daryo
+    name: Daryo
+    kind: rss
+    url: https://daryo.uz/ru/rss-full/
+    tier: C
+
+  - code: uzdaily
+    name: UzDaily
+    kind: rss
+    url: https://www.uzdaily.uz/ru/rss/
+    tier: C
+    backfill:                        # лента на 3 ч; sitemap ~850 КБ, lastmod с точностью до дня
+      strategy: sitemap
+      url: https://www.uzdaily.uz/sitemap-ru-articles-1.xml
+      url_filter: /ru/
+
+  - code: review
+    name: Review.uz
+    kind: rss
+    url: https://review.uz/rss
+    tier: C
+
+  - code: uza
+    name: УзА
+    kind: rss
+    url: https://uza.uz/ru/rss
+    tier: C
+    backfill:                        # лента на 45 ч; lastmod совпадает с временем публикации
+      strategy: sitemap_monthly
+      url: https://uza.uz/sitemap/posts-ru-{Y}-{MM}.xml
+      url_filter: /ru/posts/
+      lastmod_is_published: true
+
+  - code: podrobno
+    name: Podrobno.uz
+    kind: rss                        # RSS для оперативности, рубрики — для глубины
+    url: https://podrobno.uz/rss/
+    tier: C
+    exclude_url_patterns: [/cat/proisshestviya/, /cat/sport/]
+    backfill:                        # лента на 48 ч, sitemap не обновлялся с 2023 года
+      strategy: list_paged
+      html:
+        list_urls: [https://podrobno.uz/cat/economic/, https://podrobno.uz/cat/uzbekistan/]
+        link_pattern: '^/cat/[a-z_-]+/[^/"?]+/$'
+        pages: '?PAGEN_1={n}'
+
+  - code: nuz
+    name: Новый Узбекистан (nuz.uz)
+    kind: rss
+    url: https://nuz.uz/feed/
+    tier: C
+    backfill:                        # лента на 65 ч, с запасом
+      strategy: feed_paged
+      url: https://nuz.uz/feed/?paged={n}

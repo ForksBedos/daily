@@ -1,0 +1,151 @@
+# Подписи дайджеста на трёх языках (render/markdown.py, PLAN.md, раздел 7).
+# Порядок полей статьи во всех языках один и тот же: краткое → подробное → (документ) → источник → также писали.
+# В {фигурных скобках} — подставляемые значения. Узбекский — латиница: o‘ и g‘ с ‘ (U+2018),
+# тутуқ белгиси — ’ (U+2019), как в glossary.yaml. Узбекские подписи проверяет носитель на пилоте.
+
+ru:
+  title: "Бизнес, финансы, налоги — {date}"
+  months: [января, февраля, марта, апреля, мая, июня, июля, августа, сентября, октября, ноября, декабря]
+  long_date: "{day} {month} {year}"
+  short_date: "{dd}.{mm}.{year}"
+  decimal: ","
+  thousands: " "
+  rates: "Курсы ЦБ на {date}"
+  categories:
+    legislation: Законодательство
+    taxes: Налоги
+    accounting: Бухучёт и отчётность
+    finance: Финансы и банки
+    business: Бизнес и инвестиции
+    macro: Макроэкономика
+  summary: Краткое содержание
+  details: Подробное содержание
+  document: Документ
+  source: Источник
+  also: Также писали
+  no_llm: "Без ИИ-обработки: начало материала из источника."
+  no_translation: ""
+  check: "⚠️ Проверить"
+  check_hint: ""
+  effective: "дата вступления в силу: {date}"
+  link_lang: {uz: "на узбекском", en: "на английском"}
+  statuses:
+    verified: "✅"
+    pending: "⏳ ожидает публикации на lex.uz"
+    draft: "📝 проект"
+    not_found: "❓ на lex.uz не найден, проверить вручную"
+  acts:
+    ZRU: "Закон № ЗРУ-{number}"
+    UP: "Указ Президента № УП-{number}"
+    PP: "Постановление Президента № ПП-{number}"
+    RP: "Распоряжение Президента № Р-{number}"
+    PKM: "Постановление Кабинета Министров № {number}"
+    MJ: "Ведомственный акт, зарегистрированный Минюстом за № {number}"
+    SENATE: "Постановление Сената № {number}"
+    COURT: "Решение суда № {number}"
+  act_date: "{act} от {date}"
+  updates: Обновления
+  update: "{act} — опубликован на lex.uz: {link}. Ранее, в дайджесте за {date}, ожидал публикации: «{headline}»"
+  not_responded: Не ответили
+  all_responded: Все источники ответили
+  stale: "нет опроса с {date}"
+  no_llm_count: Без ИИ-обработки
+  no_translation_count: Перевод не готов
+
+en:
+  title: "Business, finance, taxes — {date}"
+  months: [January, February, March, April, May, June, July, August, September, October, November, December]
+  long_date: "{day} {month} {year}"
+  short_date: "{day} {month} {year}"
+  decimal: "."
+  thousands: ","
+  rates: "Central Bank rates for {date}"
+  categories:
+    legislation: Legislation
+    taxes: Taxes
+    accounting: Accounting and reporting
+    finance: Finance and banking
+    business: Business and investment
+    macro: Macroeconomics
+  summary: Summary
+  details: Details
+  document: Document
+  source: Source
+  also: Also reported by
+  no_llm: "Not processed by AI: the beginning of the source article."
+  no_translation: "Translation not ready: the Russian text is below."
+  check: "⚠️ Check"
+  check_hint: "details are in the Russian version"
+  effective: "effective date: {date}"
+  link_lang: {ru: "in Russian", uz: "in Uzbek"}
+  statuses:
+    verified: "✅"
+    pending: "⏳ awaiting publication on lex.uz"
+    draft: "📝 draft"
+    not_found: "❓ not found on lex.uz, check manually"
+  acts:
+    ZRU: "Law No. ZRU-{number}"
+    UP: "Presidential Decree No. UP-{number}"
+    PP: "Presidential Resolution No. PP-{number}"
+    RP: "Presidential Order No. R-{number}"
+    PKM: "Cabinet of Ministers Resolution No. {number}"
+    MJ: "Departmental act registered by the Ministry of Justice under No. {number}"
+    SENATE: "Senate Resolution No. {number}"
+    COURT: "Court Decision No. {number}"
+  act_date: "{act} of {date}"
+  updates: Updates
+  update: "{act} is now published on lex.uz: {link}. In the {date} digest it was awaiting publication: “{headline}”"
+  not_responded: No response from
+  all_responded: All sources responded
+  stale: "not polled since {date}"
+  no_llm_count: Not processed by AI
+  no_translation_count: Translation not ready
+
+uz:
+  title: "Biznes, moliya, soliqlar — {date}"
+  months: [yanvar, fevral, mart, aprel, may, iyun, iyul, avgust, sentabr, oktabr, noyabr, dekabr]
+  long_date: "{year}-yil {day}-{month}"
+  short_date: "{dd}.{mm}.{year}"
+  decimal: ","
+  thousands: " "
+  rates: "Markaziy bank kurslari, {date}"
+  categories:
+    legislation: Qonunchilik
+    taxes: Soliqlar
+    accounting: Buxgalteriya hisobi va hisobot
+    finance: Moliya va banklar
+    business: Biznes va investitsiyalar
+    macro: Makroiqtisodiyot
+  summary: Qisqacha mazmuni
+  details: Batafsil
+  document: Hujjat
+  source: Manba
+  also: Shuningdek yozdi
+  no_llm: "Sun’iy intellekt ishlovisiz: manbadagi materialning boshi."
+  no_translation: "Tarjima tayyor emas: quyida ruscha matn."
+  check: "⚠️ Tekshirish kerak"
+  check_hint: "tafsilotlar ruscha versiyada"
+  effective: "kuchga kirish sanasi: {date}"
+  link_lang: {ru: "rus tilida", en: "ingliz tilida"}
+  statuses:
+    verified: "✅"
+    pending: "⏳ lex.uz’da e’lon qilinishi kutilmoqda"
+    draft: "📝 loyiha"
+    not_found: "❓ lex.uz’da topilmadi, qo‘lda tekshirish kerak"
+  acts:
+    ZRU: "O‘RQ-{number}-son Qonun"
+    UP: "Prezidentning PF-{number}-son Farmoni"
+    PP: "Prezidentning PQ-{number}-son qarori"
+    RP: "Prezidentning R-{number}-son farmoyishi"
+    PKM: "Vazirlar Mahkamasining {number}-son qarori"
+    MJ: "Adliya vazirligida {number}-son bilan ro‘yxatga olingan idoraviy hujjat"
+    SENATE: "Senatning {number}-son qarori"
+    COURT: "Sudning {number}-son qarori"
+  act_date: "{act} ({date})"
+  updates: Yangilanishlar
+  update: "{act} lex.uz’da e’lon qilindi: {link}. {date} dayjestida e’lon qilinishi kutilayotgan edi: “{headline}”"
+  not_responded: Javob bermadi
+  all_responded: Barcha manbalar javob berdi
+  stale: "{date} dan beri so‘rov yo‘q"
+  no_llm_count: Sun’iy intellekt ishlovisiz
+  no_translation_count: Tarjima tayyor emas

@@ -1,0 +1,25 @@
+# Свое имя обязательно: папка называется daily, как у контент-завода, и без него проекты смешались бы.
+name: uzdigest
+
+services:
+  uzdigest:
+    build: .
+    image: uzdigest:local
+    container_name: uzdigest
+    env_file: .env
+    restart: unless-stopped
+    init: true
+    volumes:
+      # База в томе: режим WAL ненадёжен в папке, общей с Windows. Копии базы лежат в обычной папке
+      - uzdigest-data:/app/data
+      - ./data/backup:/app/data/backup
+      # Голосовые: контейнер кладёт записи, посредник на Windows отдаёт их транскрибатору
+      - ./data/voice:/app/data/voice
+      - ./outputs:/app/outputs
+      - ./logs:/app/logs
+      - ./config:/app/config:ro
+      - ./src:/app/src:ro
+
+volumes:
+  uzdigest-data:
+    name: uzdigest-data

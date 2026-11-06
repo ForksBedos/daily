@@ -1,0 +1,12 @@
+claude-agent-sdk==0.2.176
+feedparser==6.0.14
+httpx==0.28.1
+Jinja2==3.1.6
+pydantic==2.14.2
+pytest==9.2.0
+python-dotenv==1.2.4
+python-telegram-bot==22.8
+PyYAML==6.0.3
+ruff==0.17.3
+trafilatura==2.3.1
+tzdata==2026.6

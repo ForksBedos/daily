@@ -1,0 +1,17 @@
+# Секреты
+.env
+
+# Окружение и кэши
+.venv/
+__pycache__/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+
+# Рабочие данные конвейера (БД, бэкапы, логи, готовые дайджесты)
+data/
+logs/
+outputs/
+
+# Локальные настройки Claude Code
+.claude/settings.local.json

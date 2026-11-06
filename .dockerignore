@@ -1,0 +1,7 @@
+# В образ попадает только перечисленное: секреты, база и журналы туда не идут
+*
+!pyproject.toml
+!docker-constraints.txt
+!src
+!config
+**/__pycache__
